@@ -49,7 +49,11 @@ def process_files(directory):
                 except subprocess.CalledProcessError as e:
                     print(f"Failed to convert {file}: {e}")
 
-if not os.listdir(files_dir):
+
+                else:
+                    print(f"Skipping unsupported file: {file}")
+
+if not any(os.path.isfile(os.path.join(root, file)) for root, _, files in os.walk(files_dir) for file in files):
     print("No files to process.")
     exit(0)
 

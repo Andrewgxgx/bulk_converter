@@ -11,9 +11,9 @@ import subprocess
 
 files_dir = "./input"
 output_dir = "./output"
-
+output_format = "html"
 # Supported inputs
-convert_formats = (".epub", ".lit", ".mobi", ".fb2", "html", ".rtf", ".txt", ".doc", ".docx", ".odt")
+convert_formats = (".pdf", ".lit", ".mobi", ".fb2", "epub", ".rtf", ".txt", ".doc", ".docx", ".odt")
 
 # This makes sure if the directories exist or not
 os.makedirs(output_dir, exist_ok=True)
@@ -29,18 +29,18 @@ def process_files(directory):
             os.makedirs(output_folder, exist_ok=True)
             output_path = os.path.join(output_folder, file)
 
-            # if the file is already in .pdf it will just move it to the pdf folder
-            if file.lower().endswith(".pdf"):
+            # if the file is already in .epub it will just move it to the pdf folder
+            if file.lower().endswith(f".{output_format}"):
                 shutil.move(input_path, output_path)
-                print(f"Moved PDF to: {file}")
+                print(f"Moved {output_format} to: {file}")
 
-            # If its in other format, it will be converted to pdf
+            # If its in other format, it will be converted to epub
             elif file.lower().endswith(convert_formats):
-                output_pdf_path = os.path.join(output_folder, os.path.splitext(file)[0] + ".pdf")
+                output_file = os.path.join(output_folder, os.path.splitext(file)[0] + f".{output_format}")
 
                 try:
-                    subprocess.run(["ebook-convert", input_path, output_pdf_path], check=True)
-                    print(f"Converted: {file} -> {output_pdf_path}")
+                    subprocess.run(["ebook-convert", input_path, output_file], check=True)
+                    print(f"Converted: {file} -> {output_file}")
 
                     # Remove these two lines if you dont want ur files to be deleted after conversion
                     os.remove(input_path)
@@ -48,7 +48,6 @@ def process_files(directory):
 
                 except subprocess.CalledProcessError as e:
                     print(f"Failed to convert {file}: {e}")
-
 
                 else:
                     print(f"Skipping unsupported file: {file}")
