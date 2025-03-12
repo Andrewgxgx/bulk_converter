@@ -30,7 +30,6 @@ To be able to use the document converter, you must have these in your system ins
 `cd 'document converter'` 
 
 3. Then run your python script
-
     1. supported extension to pdf 
 
         `python3 xtopdf.py`
@@ -51,7 +50,7 @@ To be able to use the document converter, you must have these in your system ins
 2. *.epub
 3. *.lit
 4. *.mobi
-5. *.fb2
+5. *.fb2 (there is some formatting problems when converting *.fb2 --> epub)
 6. *.rtf
 7. *.html
 8. *.txt
